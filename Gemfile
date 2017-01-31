@@ -8,9 +8,15 @@ end
 gem 'rails', '~> 5.0.1'
 gem 'sqlite3'
 gem 'puma', '~> 3.0'
+gem 'devise'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 group :development do
