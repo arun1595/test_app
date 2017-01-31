@@ -10,5 +10,9 @@ FactoryGirl.define do
     street 'Warren Ave'
     country 'United States of America'
     zip_code '48228'
+
+    factory :invalid_user do
+      email ''
+    end
   end
 end
