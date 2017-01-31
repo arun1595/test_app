@@ -40,4 +40,38 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
     end
   end
+
+  describe '#show' do
+    context 'existent user' do
+      before do
+        @user = FactoryGirl.create(:user)
+        get :show, params: { id: 1 }
+      end
+
+      it 'returns a status code of 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns a json representation of the user object' do
+        json_response = JSON.parse(response.body, symbolize_names: true)
+        expect(json_response[:email]).to eql(@user[:email])
+        expect(json_response[:first_name]).to eql(@user[:first_name])
+      end
+    end
+
+    context 'non-existent user' do
+      before do
+        get :show, params: { id: 'non' }
+      end
+
+      it 'returns a status code of 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns a json representation of the error object' do
+        json_response = JSON.parse(response.body, symbolize_names: true)
+        expect(json_response[:error]).to eql('User does not exist')
+      end
+    end
+  end
 end
