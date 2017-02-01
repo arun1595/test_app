@@ -17,6 +17,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         json_response = JSON.parse(response.body, symbolize_names: true)
         expect(json_response[:email]).to eql(@valid_attributes[:email])
         expect(json_response[:first_name]).to eql(@valid_attributes[:first_name])
+        expect(json_response[:errors]).to eql({})
       end
     end
 
@@ -27,11 +28,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       it 'returns a status code of 422' do
         expect(response).to have_http_status(422)
-      end
-
-      it 'returns the json representation of the errors object' do
-        json_response = JSON.parse(response.body, symbolize_names: true)
-        expect(json_response.has_key?(:errors)).to be true
       end
 
       it 'returns a json object with error message for invalid email' do
